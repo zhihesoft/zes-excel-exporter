@@ -10,7 +10,7 @@ Action Router Library is a part of Zhihesoft Essential System, it is a library o
 For the latest stable version:
 
 ```bash
-npm install zes-util
+npm install -g zes-excel-exporter
 ```
 
 
