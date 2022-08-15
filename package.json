@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "npx eslint src/",
-    "test": "mocha ./dist/tests/index.mjs"
+    "test": "mocha ./dist/tests/index.js"
   },
   "repository": {
     "type": "git",
