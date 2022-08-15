@@ -23,7 +23,7 @@ export class Book {
         raw.filter(s => !s.name.startsWith(sheetIgnoreFlag))
             .map(i => new Sheet(i.name, i.data))
             .filter(i => !i.ignore)
-            .forEach(i => i.export());
+            .forEach(i => i.export(this.name));
     }
 }
 

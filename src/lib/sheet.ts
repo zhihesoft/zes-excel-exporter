@@ -11,6 +11,9 @@ export class Sheet {
     ) {
         this.name = (rows[0] as string[])[0];
         this.keys = PropKey.parse(this);
+        if (!this.idKey || this.idKey.ignore) {
+            this.ignore = true;
+        }
     }
 
     name = "";
@@ -21,26 +24,24 @@ export class Sheet {
         return this.keys[0];
     }
 
-    export() {
+    export(bookname: string) {
         if (this.name == App.args.language) {
             this.exportLanguage();
         } else {
+            logger.info(`[${bookname}].${this.displayName} => ${this.name}`);
             this.exportCommon();
         }
     }
 
     private exportCommon() {
         this.rows.slice(3).forEach(i => this.exportLangInLine(i as unknown[]));
-        const serveritems = this.rows.slice(3).map(i => this.exportItem(i as unknown[], (key) => key.server)).filter(i => i);
-        const clientitems = this.rows.slice(3).map(i => this.exportItem(i as unknown[], (key) => key.client)).filter(i => i);
+        const serveritems = this.rows.slice(3).map(i => this.exportItem(i as unknown[], (key) => key && key.server)).filter(i => i);
+        const clientitems = this.rows.slice(3).map(i => this.exportItem(i as unknown[], (key) => key && key.client)).filter(i => i);
         exportData(App.serverOutputDir, this.name, serveritems);
         exportData(App.clientOutputDir, this.name, clientitems);
     }
 
     private exportItem(line: unknown[], condition: (key: PropKey) => boolean) {
-        if (!this.idKey) {
-            return undefined;
-        }
         if (!condition(this.idKey)) {
             return undefined;
         }
