@@ -2,8 +2,12 @@ import fs from "fs";
 import path from "path";
 import { App } from "./app";
 import { format } from "fast-csv";
+import { isEmpty } from "lodash";
 
 export function exportData(dir: string, filename: string, data: unknown) {
+    if (isEmpty(data)) {
+        return;
+    }
     if (App.args.csv) {
         exportCsvData(dir, filename, data);
     } else {

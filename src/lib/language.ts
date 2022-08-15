@@ -24,7 +24,7 @@ export function languageNextId() {
 export function languageAdd(lang: string, id: number, value: string) {
     const data = getLanguageData(lang);
     if (data[id]) {
-        const err = new Error(`id(${id}) already existed. (${lang})`);
+        const err = new Error(`${lang} id(${id}) already existed. (${lang})`);
         logger.error(err.message);
         throw err;
     }
@@ -39,12 +39,8 @@ export function languageExport() {
     ensureDir(outdir);
     languages.forEach((lang, key) => {
         const filename = `i18n-${key}`;
-        if (App.args.csv) { // 如果是csv，把map变成array
-            const items = map(lang, (v, k) => { return { id: k, value: v } });
-            exportData(outdir, filename, items);
-        } else {
-            exportData(outdir, filename, lang);
-        }
+        const items = App.args.csv ? map(lang, (v, k) => { return { id: k, value: v } }) : lang;
+        exportData(outdir, filename, items);
     });
 }
 
