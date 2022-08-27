@@ -55,6 +55,7 @@ export class PropKey {
         public name: string,
         public description: string
     ) {
+        this.description = this.description ?? "";
         if (this.description.startsWith(propKeyIgnoreFlag) || isEmpty(this.name)) {
             this.ignore = true;
             return;
