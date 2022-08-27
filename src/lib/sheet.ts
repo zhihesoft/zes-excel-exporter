@@ -11,7 +11,7 @@ export class Sheet {
     ) {
         this.name = (rows[0] as string[])[0];
         this.keys = PropKey.parse(this);
-        if (!this.idKey || this.idKey.ignore) {
+        if (!this.idKey || this.idKey.ignore || !this.name || this.name.length <= 0) {
             this.ignore = true;
         }
     }
