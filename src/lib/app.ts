@@ -1,8 +1,10 @@
+import log4js from "log4js";
 import path from "path";
 import { exit } from "process";
 import { AppArgs } from "./app.args";
 import { Book } from "./book";
 import { languageExport, languageInit } from "./language";
+import { log4jsconf } from "./log4js.conf";
 import { checkDir, ensureDir, getExcels, log, removeDir } from "./util";
 
 
@@ -23,18 +25,23 @@ export class App {
     }
 
     static async run(args: AppArgs) {
-        App.checkArgs(args);
-        languageInit(args.lid);
-        const books = getExcels(args.input).map(file => new Book(file));
-        books.forEach(book => book.export());
-        languageExport();
+
+        log4js.configure(log4jsconf);
+
+        if (App.checkArgs(args)) {
+            languageInit(args.lid);
+            const books = getExcels(args.input).map(file => new Book(file));
+            books.forEach(book => book.export());
+            languageExport();
+        }
+        log4js.shutdown();
     }
 
-    private static checkArgs(args: AppArgs) {
+    private static checkArgs(args: AppArgs): boolean {
         App.args = args;
         if (!checkDir(App.args.input)) {
             logger.error(`${this.args.input} not existed`);
-            exit(1);
+            return false;
         }
 
         removeDir(args.output);
@@ -42,21 +49,22 @@ export class App {
         const serverdir = App.serverOutputDir;
         if (!ensureDir(serverdir)) {
             logger.error(`create ${serverdir} failed`);
-            exit(1);
+            return false;
         }
 
         const clientdir = App.clientOutputDir;
         if (!ensureDir(clientdir)) {
             logger.error(`create ${clientdir} failed`);
-            exit(1);
+            return false;
         }
 
         const languagedir = App.languageOutputDir;
         if (!ensureDir(languagedir)) {
             logger.error(`create ${languagedir} failed`);
-            exit(1);
+            return false;
         }
 
+        return true;
     }
 }
 

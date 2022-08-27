@@ -4,38 +4,6 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { App } from './lib/app';
 import { AppArgs } from './lib/app.args';
-import log4js from "log4js";
-
-log4js.configure({
-    "appenders": {
-        "console": {
-            "type": "console",
-            "layout": {
-                "type": "pattern",
-                "pattern": "[%d] [%p] [%c %f{1}:%l:%o] %m"
-            }
-        },
-        "common": {
-            "type": "file",
-            "filename": "zes-excel-export.log",
-            "flags": "w",
-            "layout": {
-                "type": "pattern",
-                "pattern": "[%d] [%p] [%c %f{1}:%l:%o] %m"
-            }
-        }
-    },
-    "categories": {
-        "default": {
-            "appenders": [
-                "console",
-                "common"
-            ],
-            "level": "debug",
-            "enableCallStack": true
-        }
-    }
-});
 
 const args: AppArgs = yargs(hideBin(process.argv))
     .usage("Usage: zes-excel-exporter [options]")
