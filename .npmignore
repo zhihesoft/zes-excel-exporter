@@ -5,6 +5,7 @@ src
 logs
 configs
 output
+tsconfig.json
 # all tests and tgs
 dist/tests
 **/*.spec.js
