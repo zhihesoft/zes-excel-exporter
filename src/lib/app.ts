@@ -1,6 +1,5 @@
 import log4js from "log4js";
 import path from "path";
-import { exit } from "process";
 import { AppArgs } from "./app.args";
 import { Book } from "./book";
 import { languageExport, languageInit } from "./language";
@@ -27,13 +26,15 @@ export class App {
     static async run(args: AppArgs) {
 
         log4js.configure(log4jsconf);
-
         if (App.checkArgs(args)) {
             languageInit(args.lid);
             const books = getExcels(args.input).map(file => new Book(file));
             books.forEach(book => book.export());
             languageExport();
+        } else {
+            process.exitCode = 1;
         }
+
         log4js.shutdown();
     }
 
