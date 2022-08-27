@@ -25,10 +25,10 @@ export class Sheet {
     }
 
     export(bookname: string) {
+        logger.info(`[${bookname}].${this.displayName} => ${this.name}`);
         if (this.name == App.args.language) {
             this.exportLanguage();
         } else {
-            logger.info(`[${bookname}].${this.displayName} => ${this.name}`);
             this.exportCommon();
         }
     }
