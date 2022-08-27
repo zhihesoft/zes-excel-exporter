@@ -1,6 +1,6 @@
 {
   "name": "zes-excel-exporter",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Excel exporter for ZES",
   "main": "./dist/index.js",
   "bin": {
