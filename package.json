@@ -1,6 +1,6 @@
 {
   "name": "zes-excel-exporter",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Excel exporter for ZES",
   "main": "./dist/index.js",
   "bin": {
@@ -31,6 +31,7 @@
     "@types/lodash": "^4.14.182",
     "@types/mocha": "^9.1.1",
     "@types/node": "^18.7.2",
+    "@types/node-xlsx": "^0.21.0",
     "@types/yargs": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",

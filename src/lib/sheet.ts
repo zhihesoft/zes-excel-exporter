@@ -45,6 +45,9 @@ export class Sheet {
         if (!condition(this.idKey)) {
             return undefined;
         }
+        if (String(line[0]).startsWith("*")) { // ignore line start with *
+            return undefined;
+        }
         const ret: { [index: string]: unknown } = {};
         for (const key of this.keys) {
             if (!condition(key)) {
