@@ -20,10 +20,14 @@ export class Book {
             return false;
         }
 
-        raw.filter(s => !s.name.startsWith(sheetIgnoreFlag))
-            .map(i => new Sheet(i.name, i.data))
-            .filter(i => !i.ignore)
-            .forEach(i => i.export(this.name));
+        try {
+            raw.filter(s => !s.name.startsWith(sheetIgnoreFlag))
+                .map(i => new Sheet(i.name, i.data))
+                .filter(i => !i.ignore)
+                .forEach(i => i.export(this.name));
+        } catch (err) {
+            logger.error(`Parse ${this.filepath} failed! ${err}`);
+        }
     }
 }
 

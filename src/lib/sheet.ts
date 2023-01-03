@@ -9,7 +9,8 @@ export class Sheet {
         public displayName: string,
         public rows: unknown[]
     ) {
-        this.name = (rows[0] as string[])[0];
+        const firstRow = rows[0] as string[];
+        this.name = firstRow[0];
         this.keys = PropKey.parse(this);
         if (!this.idKey || this.idKey.ignore || !this.name || this.name.length <= 0) {
             this.ignore = true;
