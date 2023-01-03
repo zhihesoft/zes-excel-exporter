@@ -10,10 +10,14 @@ export class Sheet {
         public rows: unknown[]
     ) {
         const firstRow = rows[0] as string[];
-        this.name = firstRow[0];
-        this.keys = PropKey.parse(this);
-        if (!this.idKey || this.idKey.ignore || !this.name || this.name.length <= 0) {
+        if (!firstRow) { // ignore empty sheet
             this.ignore = true;
+        } else {
+            this.name = firstRow[0];
+            this.keys = PropKey.parse(this);
+            if (!this.idKey || this.idKey.ignore || !this.name || this.name.length <= 0) {
+                this.ignore = true;
+            }
         }
     }
 
