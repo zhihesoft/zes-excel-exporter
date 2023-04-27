@@ -5,9 +5,7 @@ import { Sheet } from "./sheet";
 import { log } from "./util";
 
 export class Book {
-    constructor(
-        public filepath: string
-    ) {
+    constructor(public filepath: string) {
         this.name = path.parse(this.filepath).name;
     }
 
@@ -21,10 +19,19 @@ export class Book {
         }
 
         try {
-            raw.filter(s => !s.name.startsWith(sheetIgnoreFlag))
+            const sheets = raw
+                .filter(s => !s.name.startsWith(sheetIgnoreFlag))
                 .map(i => new Sheet(i.name, i.data))
-                .filter(i => !i.ignore)
-                .forEach(i => i.export(this.name));
+                .filter(i => !i.ignore);
+            const sheetMap = new Map<string, Sheet>();
+            sheets.forEach(i => {
+                if (sheetMap.has(i.name)) {
+                    sheetMap.get(i.name)?.merge(i);
+                } else {
+                    sheetMap.set(i.name, i);
+                }
+            });
+            Array.from(sheetMap.values()).forEach(i => i.export(this.name));
         } catch (err) {
             logger.error(`Parse ${this.filepath} failed! ${err}`);
         }

@@ -6,6 +6,12 @@ export function log(name: string) {
     return getLogger(name);
 }
 
+export function assert(condition: boolean, message: string) {
+    if (!condition) {
+        throw new Error(message);
+    }
+}
+
 export function getExcels(dir: string): string[] {
     // init configs
     const ret: string[] = [];
@@ -52,6 +58,4 @@ function createDir(dir: string): boolean {
     }
 }
 
-
 const logger = log(`util`);
-
